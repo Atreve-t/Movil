@@ -69,7 +69,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.577" />
+        app:layout_constraintVertical_bias="0.527" />
+
+    <EditText
+        android:id="@+id/phoneInput"
+        android:layout_width="229dp"
+        android:layout_height="54dp"
+        android:hint="Celular"
+        android:inputType="phone"
+        tools:layout_editor_absoluteX="91dp"
+        tools:layout_editor_absoluteY="411dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView"
