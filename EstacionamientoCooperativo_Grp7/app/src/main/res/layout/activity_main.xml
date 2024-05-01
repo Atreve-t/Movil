@@ -13,10 +13,20 @@
         android:text="Ingresar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.888"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685" />
+        app:layout_constraintVertical_bias="0.684" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="150dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="74dp"
+        android:text="REGISTRARSE"
+        app:layout_constraintEnd_toStartOf="@+id/btnLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPass" />
 
     <EditText
         android:id="@+id/etUsername"
@@ -51,15 +61,15 @@
         android:layout_width="266dp"
         android:layout_height="67dp"
         android:layout_marginTop="76dp"
-        android:text="Login"
+        android:text="PARKING"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Login" />
+        tools:text="PARKING" />
 
     <Button
         android:id="@+id/btnGoogle"

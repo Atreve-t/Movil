@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -32,7 +35,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnLogin, googleAuth;
+    Button btnLogin, googleAuth, btnRegister;
     EditText username, pass;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -49,23 +52,102 @@ public class MainActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance("https://atreve-t-isi-default-rtdb.firebaseio.com/");
         databaseReference = firebaseDatabase.getReference();
 
-        btnLogin= findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    // Obtener referencia a los EditText
+                    username = findViewById(R.id.etUsername);
+                    pass = findViewById(R.id.etPass);
+
+                    // Obtener el correo electrónico y la contraseña ingresados por el usuario
+                    final String email = username.getText().toString();
+                    final String password = pass.getText().toString();
+
+                    // Obtener referencia a la colección "usuarios"
+                    DatabaseReference usuariosRef = FirebaseDatabase.getInstance("https://atreve-t-isi-default-rtdb.firebaseio.com/")
+                            .getReference().child("usuarios");
+
+                    // Realizar una consulta para buscar el usuario con el correo electrónico proporcionado
+                    usuariosRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                // El correo electrónico ya está registrado
+                                Toast.makeText(MainActivity.this, "El correo electrónico ya está registrado", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // El correo electrónico no está registrado, se puede crear el nuevo usuario
+                                Usuario user = new Usuario(email, password, "usuario");
+
+                                // Guardar el usuario en la colección "usuarios" con el UID generado
+                                usuariosRef.child(usuariosRef.push().getKey()).setValue(user);
+
+                                // Iniciar la actividad InitPage
+                                Intent intent = new Intent(MainActivity.this, InitPage.class);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Manejar cualquier error de base de datos
+                            Log.e("Firebase", "Error al leer datos de Firebase: " + databaseError.getMessage(), databaseError.toException());
+                            Toast.makeText(MainActivity.this, "Error al leer datos de Firebase", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception ex) {
+                    // Manejar cualquier excepción
+                    Log.e("Registro", "Error al registrar usuario: " + ex.getMessage(), ex);
+                    Toast.makeText(MainActivity.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     username = findViewById(R.id.etUsername);
                     pass = findViewById(R.id.etPass);
-                    Usuario user = new Usuario(username.getText().toString(),pass.getText().toString(),"usuario");
-                    //podemos guardar:
-                    firebaseDatabase = FirebaseDatabase.getInstance("https://atreve-t-isi-default-rtdb.firebaseio.com/");
-                    databaseReference = firebaseDatabase.getReference().push();
-                    databaseReference.setValue(user);
 
-                    Intent intent = new Intent(MainActivity.this, InitPage.class);
-                    startActivity(intent);
-                }catch (Exception ex){
+                    // Obtener una referencia a la colección "usuarios"
+                    DatabaseReference usuariosRef = FirebaseDatabase.getInstance("https://atreve-t-isi-default-rtdb.firebaseio.com/")
+                            .getReference().child("usuarios");
 
+                    // Realizar una consulta para buscar el usuario con el nombre de usuario proporcionado
+                    usuariosRef.orderByChild("email").equalTo(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            boolean userFound = false;
+                            for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                                Usuario user = userSnapshot.getValue(Usuario.class);
+                                if (user != null && user.getPassword().equals(pass.getText().toString())) {
+                                    // El usuario existe y la contraseña es correcta
+                                    userFound = true;
+                                    Intent intent = new Intent(MainActivity.this, InitPage.class);
+                                    startActivity(intent);
+                                    break;
+                                }
+                            }
+                            if (!userFound) {
+                                Toast.makeText(MainActivity.this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Manejar cualquier error de base de datos
+                            Log.e("Firebase", "Error al leer datos de Firebase: " + databaseError.getMessage(), databaseError.toException());
+                            Toast.makeText(MainActivity.this, "Error al leer datos de Firebase", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception ex) {
+                    // Manejar cualquier excepción
+                    Log.e("Login", "Error al iniciar sesión: " + ex.getMessage(), ex);
+                    Toast.makeText(MainActivity.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
                 }
             }
         });
