@@ -1,3 +1,5 @@
+package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
+
 class Garaje {
     private String propietarioId;
     private String direccion;
@@ -103,7 +105,7 @@ class Garaje {
     }
 
     // Otros campos según sea necesario
-    public Garaje(String propietarioId, String direccion, double latitud, double longitud, double alto, double ancho, double largo, String estado, List<Horario> horarios) {
+    public Garaje(String propietarioId, String direccion, double latitud, double longitud, double alto, double ancho, double largo, String estado) {
         this.propietarioId = propietarioId;
         this.direccion = direccion;
         this.latitud = latitud;
@@ -112,7 +114,6 @@ class Garaje {
         this.ancho = ancho;
         this.largo = largo;
         this.estado = estado;
-        this.horarios = horarios;
     }
 
 }

@@ -36,6 +36,18 @@
             android:name=".InitPage"
             android:exported="false" />
         <activity
+            android:name=".BidderPage"
+            android:exported="false" />
+        <activity
+            android:name=".OfferPagesUI.MyListGaragesPage"
+            android:exported="false" />
+        <activity
+            android:name=".OfferPagesUI.RegisterGarage"
+            android:exported="false" />
+        <activity
+            android:name=".OfferPagesUI.RequestBidder"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>

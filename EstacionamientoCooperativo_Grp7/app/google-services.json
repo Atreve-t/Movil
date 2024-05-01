@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "791749932835",
+    "firebase_url": "https://atreve-t-isi-default-rtdb.firebaseio.com",
+    "project_id": "atreve-t-isi",
+    "storage_bucket": "atreve-t-isi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791749932835:android:907a29a9b122d442f7fe96",
+        "android_client_info": {
+          "package_name": "com.example.estacionamientocooperativo_grp7_atreve_t"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791749932835-i2p2uknqbsi7rsk7bsj6eof8t4acq03e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.estacionamientocooperativo_grp7_atreve_t",
+            "certificate_hash": "c80ea30849c9997fcaa0782a74bb884707fcb5b0"
+          }
+        },
+        {
+          "client_id": "791749932835-j7249tpnvit5mlk093vald2jbbdvdnht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG7jWO4LbTsyDHXDEFOKaA-LIf2lqHnbc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791749932835-80kspup62or1q1n5rb0p09qsb415s9he.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

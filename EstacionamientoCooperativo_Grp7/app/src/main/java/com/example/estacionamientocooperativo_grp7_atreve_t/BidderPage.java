@@ -1,17 +1,15 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.estacionamientocooperativo_grp7_atreve_t.ClientPagesUI.MyListGaragesPage;
+import com.example.estacionamientocooperativo_grp7_atreve_t.OfferPagesUI.MyListGaragesPage;
 import com.example.estacionamientocooperativo_grp7_atreve_t.ClientPagesUI.ProfilePage;
-import com.example.estacionamientocooperativo_grp7_atreve_t.ClientPagesUI.RegisterGarage;
-import com.example.estacionamientocooperativo_grp7_atreve_t.ClientPagesUI.RequestBidder;
+import com.example.estacionamientocooperativo_grp7_atreve_t.OfferPagesUI.RegisterGarage;
+import com.example.estacionamientocooperativo_grp7_atreve_t.OfferPagesUI.RequestBidder;
 
 
 public class BidderPage extends Activity {

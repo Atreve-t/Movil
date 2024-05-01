@@ -1,5 +1,8 @@
+package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
+
 public class Usuario {
     private String email;
+    private String password;
     private String tipo;
 
     public Usuario(){}
@@ -20,12 +23,22 @@ public class Usuario {
         this.tipo = tipo;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     // Otros campos según sea necesario
 
-    public Usuario(String email, String tipo) {
+    public Usuario(String email,String password, String tipo) {
         this.email = email;
+        this.password = password;
         this.tipo = tipo;
     }
+
+
 
     // Getters y setters
     // ...

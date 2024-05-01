@@ -1,3 +1,5 @@
+package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
+
 class Automovil {
 
     private String marca;

@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.685" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etUsername"
         android:layout_width="229dp"
         android:layout_height="54dp"
         android:ems="10"
@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.295" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/etPass"
         android:layout_width="240dp"
         android:layout_height="56dp"
         android:layout_marginTop="75dp"
@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
     <TextView
         android:id="@+id/textView3"
@@ -60,5 +60,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Login" />
+
+    <Button
+        android:id="@+id/btnGoogle"
+        android:layout_width="150dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:text="INGRESAR CON GOOGLE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
