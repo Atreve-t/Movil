@@ -1,6 +1,6 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
 
-class Calificacion {
+public class Calificacion {
     private String ofertaId;
     private String usuarioCalificadoId;
     private String tipo;

@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="189dp"
-        android:layout_height="121dp"
-        android:text="Reservar tu garaje"
+        android:layout_width="308dp"
+        android:layout_height="115dp"
+        android:text="Busca el garaje más cercano"
         android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold"

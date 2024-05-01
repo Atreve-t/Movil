@@ -1,6 +1,6 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
 
-class Oferta {
+public class Oferta {
     private String garajeId;
     private String usuarioId;
     private String automovilId;

@@ -6,97 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".OfferPagesUI.RegisterGarage">
 
-    <ImageView
-        android:id="@+id/imageMapa"
-        android:layout_width="259dp"
-        android:layout_height="154dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23"
-        app:srcCompat="@drawable/googlemaps" />
-
-    <EditText
-        android:id="@+id/btnEnProceso"
-        android:layout_width="229dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Direccion"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.484" />
-
-    <EditText
-        android:id="@+id/btnEnProceso2"
-        android:layout_width="229dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Dimensiones"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685" />
-
-    <EditText
-        android:id="@+id/btnEnProceso4"
-        android:layout_width="229dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Senas Adicionales"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.779" />
-
-    <Button
-        android:id="@+id/btnEnProcesoBbtn"
-        android:layout_width="174dp"
-        android:layout_height="70dp"
-        android:text="Registrar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.921" />
-
-    <EditText
-        android:id="@+id/btnEnProceso3"
-        android:layout_width="229dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Detalles"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581" />
-
     <TextView
         android:id="@+id/textView8"
         android:layout_width="215dp"
-        android:layout_height="69dp"
+        android:layout_height="47dp"
         android:text="Registro de Garaje"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintVertical_bias="0.024" />
+
+
+    <EditText
+        android:id="@+id/addressGarage"
+        android:layout_width="198dp"
+        android:layout_height="45dp"
+        android:hint="Direccion"
+        app:layout_constraintBottom_toTopOf="@+id/cvFecha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.248"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mpDireccion" />
+
+    <EditText
+        android:id="@+id/widthGarage"
+        android:layout_width="104dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Ancho"
+        app:layout_constraintBottom_toTopOf="@+id/cvFecha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toEndOf="@+id/addressGarage"
+        app:layout_constraintTop_toBottomOf="@+id/mpDireccion" />
+
+    <Button
+        android:id="@+id/btnRegistrarGarage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:text="REGISTRAR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CalendarView
+        android:id="@+id/cvFecha"
+        android:layout_width="254dp"
+        android:layout_height="297dp"
+        android:layout_marginBottom="76dp"
+        android:dateTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:maxDate="12/31/2024"
+        android:minDate="5/01/2024"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextClock
+        android:id="@+id/textClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegistrarGarage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/cvFecha"
+        app:layout_constraintTop_toBottomOf="@+id/widthGarage"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mpDireccion"
+        android:layout_width="303dp"
+        android:layout_height="117dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/cvFecha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

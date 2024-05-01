@@ -5,7 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.estacionamientocooperativo_grp7_atreve_t.Modelos.*;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,9 +39,10 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     Button btnLogin, googleAuth, btnRegister;
-    EditText username, pass;
+    EditText email, pass;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    DatabaseReference usuariosRef;
 
     //Para inicio Google
     GoogleSignInClient googleSignInClient;
@@ -51,26 +55,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         firebaseDatabase = FirebaseDatabase.getInstance("https://atreve-t-isi-default-rtdb.firebaseio.com/");
         databaseReference = firebaseDatabase.getReference();
-
+        // Obtener referencia a la colección "usuarios"
+        usuariosRef = firebaseDatabase.getReference().child("usuarios");
         btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    // Obtener referencia a los EditText
-                    username = findViewById(R.id.etUsername);
+                    email = findViewById(R.id.etUsername);
                     pass = findViewById(R.id.etPass);
 
-                    // Obtener el correo electrónico y la contraseña ingresados por el usuario
-                    final String email = username.getText().toString();
-                    final String password = pass.getText().toString();
-
-                    // Obtener referencia a la colección "usuarios"
-                    DatabaseReference usuariosRef = FirebaseDatabase.getInstance("https://atreve-t-isi-default-rtdb.firebaseio.com/")
-                            .getReference().child("usuarios");
-
                     // Realizar una consulta para buscar el usuario con el correo electrónico proporcionado
-                    usuariosRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                    usuariosRef.orderByChild("email").equalTo(email.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
@@ -78,14 +74,10 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "El correo electrónico ya está registrado", Toast.LENGTH_SHORT).show();
                             } else {
                                 // El correo electrónico no está registrado, se puede crear el nuevo usuario
-                                Usuario user = new Usuario(email, password, "usuario");
+                                Usuario user = new Usuario(email.getText().toString(), pass.getText().toString(), "");
 
-                                // Guardar el usuario en la colección "usuarios" con el UID generado
                                 usuariosRef.child(usuariosRef.push().getKey()).setValue(user);
-
-                                // Iniciar la actividad InitPage
-                                Intent intent = new Intent(MainActivity.this, InitPage.class);
-                                startActivity(intent);
+                                SignIn();
                             }
                         }
 
@@ -110,15 +102,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    username = findViewById(R.id.etUsername);
+                    email = findViewById(R.id.etUsername);
                     pass = findViewById(R.id.etPass);
 
-                    // Obtener una referencia a la colección "usuarios"
-                    DatabaseReference usuariosRef = FirebaseDatabase.getInstance("https://atreve-t-isi-default-rtdb.firebaseio.com/")
-                            .getReference().child("usuarios");
-
                     // Realizar una consulta para buscar el usuario con el nombre de usuario proporcionado
-                    usuariosRef.orderByChild("email").equalTo(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    usuariosRef.orderByChild("email").equalTo(email.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             boolean userFound = false;
@@ -127,8 +115,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (user != null && user.getPassword().equals(pass.getText().toString())) {
                                     // El usuario existe y la contraseña es correcta
                                     userFound = true;
-                                    Intent intent = new Intent(MainActivity.this, InitPage.class);
-                                    startActivity(intent);
+                                    SignIn();
                                     break;
                                 }
                             }
@@ -165,6 +152,17 @@ public class MainActivity extends AppCompatActivity {
                 googleSingIn();
             }
         });
+    }
+
+    public void SignIn(){
+        // Guardar el correo electrónico en SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", email.getText().toString());
+        editor.apply();
+
+        Intent intent = new Intent(MainActivity.this, InitPage.class);
+        startActivity(intent);
     }
 
     public void googleSingIn() {
@@ -205,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                     map.put("profile", user.getPhotoUrl().toString());
 
 
-                    firebaseDatabase.getReference().child("users").child(user.getUid()).setValue(map);
+                    firebaseDatabase.getReference().child("usuarios").child(user.getUid()).setValue(map);
 
                     Intent intent = new Intent(MainActivity.this,InitPage.class);
                     startActivity(intent);

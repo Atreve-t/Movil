@@ -1,13 +1,13 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
 
-class Garaje {
+public class Garaje {
     private String propietarioId;
     private String direccion;
     private double latitud;
     private double longitud;
-    private double alto;
-    private double ancho;
-    private double largo;
+    private Integer alto;
+    private Integer ancho;
+    private Integer largo;
     private String estado;
     private String dia;
     private String inicio;
@@ -48,27 +48,27 @@ class Garaje {
         this.longitud = longitud;
     }
 
-    public double getAlto() {
+    public Integer getAlto() {
         return alto;
     }
 
-    public void setAlto(double alto) {
+    public void setAlto(Integer alto) {
         this.alto = alto;
     }
 
-    public double getAncho() {
+    public Integer getAncho() {
         return ancho;
     }
 
-    public void setAncho(double ancho) {
+    public void setAncho(Integer ancho) {
         this.ancho = ancho;
     }
 
-    public double getLargo() {
+    public Integer getLargo() {
         return largo;
     }
 
-    public void setLargo(double largo) {
+    public void setLargo(Integer largo) {
         this.largo = largo;
     }
 
@@ -105,7 +105,7 @@ class Garaje {
     }
 
     // Otros campos según sea necesario
-    public Garaje(String propietarioId, String direccion, double latitud, double longitud, double alto, double ancho, double largo, String estado) {
+    public Garaje(String propietarioId, String direccion, double latitud, double longitud, Integer alto, Integer ancho, Integer largo, String estado) {
         this.propietarioId = propietarioId;
         this.direccion = direccion;
         this.latitud = latitud;

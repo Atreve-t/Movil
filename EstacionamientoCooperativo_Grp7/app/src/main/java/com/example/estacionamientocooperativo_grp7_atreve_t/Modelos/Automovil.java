@@ -1,17 +1,16 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
 
-class Automovil {
-
-    private String marca;
-    private String modelo;
-    private double alto;
-    private double ancho;
-    private double largo;
+public class Automovil {
+    private String patente;
+    private String descripcion;
+    private int alto;
+    private int ancho;
+    private int largo;
     public Automovil(){}
-    public Automovil(String propietarioId, String marca, String modelo, double alto, double ancho, double largo) {
+    public Automovil(String propietarioId, String patente, String descripcion, int alto, int ancho, int largo) {
         this.propietarioId = propietarioId;
-        this.marca = marca;
-        this.modelo = modelo;
+        this.patente = patente;
+        this.descripcion = descripcion;
         this.alto = alto;
         this.ancho = ancho;
         this.largo = largo;
@@ -26,45 +25,44 @@ class Automovil {
         this.propietarioId = propietarioId;
     }
 
-    public String getMarca() {
-        return marca;
+    public String getPatente() {
+        return patente;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setPatente(String marca) {
+        this.patente = marca;
     }
 
-    public String getModelo() {
-        return modelo;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public double getAlto() {
+    public Integer getAlto() {
         return alto;
     }
 
-    public void setAlto(double alto) {
+    public void setAlto(Integer alto) {
         this.alto = alto;
     }
 
-    public double getAncho() {
+    public Integer getAncho() {
         return ancho;
     }
 
-    public void setAncho(double ancho) {
+    public void setAncho(Integer ancho) {
         this.ancho = ancho;
     }
 
-    public double getLargo() {
+    public Integer getLargo() {
         return largo;
     }
 
-    public void setLargo(double largo) {
+    public void setLargo(Integer largo) {
         this.largo = largo;
     }
-// Otros campos según sea necesario
 
 }

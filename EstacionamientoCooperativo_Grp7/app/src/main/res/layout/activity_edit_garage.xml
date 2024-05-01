@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/googlemaps" />
 
     <EditText
-        android:id="@+id/btnEnProceso"
+        android:id="@+id/etPatent"
         android:layout_width="229dp"
         android:layout_height="54dp"
         android:ems="10"
@@ -70,7 +70,7 @@
         app:layout_constraintVertical_bias="0.921" />
 
     <EditText
-        android:id="@+id/btnEnProceso3"
+        android:id="@+id/etDescription"
         android:layout_width="229dp"
         android:layout_height="54dp"
         android:ems="10"

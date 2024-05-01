@@ -13,13 +13,7 @@ import com.example.estacionamientocooperativo_grp7_atreve_t.OfferPagesUI.Request
 
 
 public class BidderPage extends Activity {
-    Button btnProfileJ;
-    Button btnListGarageJ;
-    Button btnRegisterGarageJ;
-
-    Button btnRequestJ;
-
-
+    Button btnProfileJ, btnListGarageJ, btnRegisterGarageJ, btnRequestJ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +22,6 @@ public class BidderPage extends Activity {
         btnListGarageJ = findViewById(R.id.btnListGarage);
         btnRegisterGarageJ = findViewById(R.id.btnRegisterGarage);
         btnRequestJ = findViewById(R.id.btnRequests);
-
 
         btnProfileJ.setOnClickListener(new View.OnClickListener() {
             @Override

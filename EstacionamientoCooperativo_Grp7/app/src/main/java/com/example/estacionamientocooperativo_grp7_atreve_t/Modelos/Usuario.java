@@ -1,11 +1,19 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
 
 public class Usuario {
+    private static Usuario instance;
     private String email;
     private String password;
     private String tipo;
 
     public Usuario(){}
+
+    public static Usuario getInstance() {
+        if (instance == null) {
+            instance = new Usuario();
+        }
+        return instance;
+    }
 
     public String getEmail() {
         return email;
