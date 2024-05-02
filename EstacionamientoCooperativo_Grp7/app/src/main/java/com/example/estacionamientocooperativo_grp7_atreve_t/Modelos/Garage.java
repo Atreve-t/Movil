@@ -1,4 +1,5 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
+import java.util.List;
 
 public class Garage {
     private String propietarioId;
@@ -9,9 +10,8 @@ public class Garage {
     private Integer ancho;
     private Integer largo;
     private String estado;
-    private String dia;
-    private String inicio;
-    private String fin;
+    private HorarioGarage horarios;
+    private Double precio;
 
 
     public Garage(){}
@@ -80,32 +80,24 @@ public class Garage {
         this.estado = estado;
     }
 
-    public String getDia() {
-        return dia;
+    public HorarioGarage getHorarios() {
+        return horarios;
     }
 
-    public void setDia(String dia) {
-        this.dia = dia;
+    public void setHorarios(HorarioGarage horarios) {
+        this.horarios = horarios;
     }
 
-    public String getInicio() {
-        return inicio;
+    public Double getPrecio() {
+        return precio;
     }
 
-    public void setInicio(String inicio) {
-        this.inicio = inicio;
-    }
-
-    public String getFin() {
-        return fin;
-    }
-
-    public void setFin(String fin) {
-        this.fin = fin;
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
     // Otros campos según sea necesario
-    public Garage(String propietarioId, String direccion, double latitud, double longitud, Integer alto, Integer ancho, Integer largo, String estado) {
+    public Garage(String propietarioId, String direccion, double latitud, double longitud, Integer alto, Integer ancho, Integer largo, String estado, HorarioGarage horarios, Double precio) {
         this.propietarioId = propietarioId;
         this.direccion = direccion;
         this.latitud = latitud;
@@ -114,6 +106,8 @@ public class Garage {
         this.ancho = ancho;
         this.largo = largo;
         this.estado = estado;
+        this.horarios = horarios;
+        this.precio = precio;
     }
 
 }

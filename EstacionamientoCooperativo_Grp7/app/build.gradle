@@ -42,7 +42,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
 
@@ -52,4 +51,11 @@ dependencies {
 
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:21.0.0")
+
+    //Componente fecha y hora
+    implementation ('com.wdullaer:materialdatetimepicker:4.2.3') {
+        exclude group: 'androidx.appcompat'
+        exclude group: 'androidx.recyclerview'
+    }
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }

@@ -22,6 +22,7 @@ import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,13 +40,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import android.location.Address;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.List;
+
+import android.app.DatePickerDialog;
+import android.widget.DatePicker;
+import java.util.Calendar;
+
+import android.app.TimePickerDialog;
+import java.text.SimpleDateFormat;
+import android.widget.ArrayAdapter;
 
 public class RegisterGarage extends Activity implements OnMapReadyCallback {
     TextView tvAddress;
     EditText etLength, etWidth, etHeight;
-    Button btnregister;
+    Button btnregister, btnpickDate;
+
+    //ListView
+    private ListView lvFechas;
+    private List<String> listFechas;
+    private ArrayAdapter<String> adaptador;
+
     FirebaseDatabase firebaseDatabase;
     DatabaseReference garagesRef, espacioGaragesRef;
     LatLng ubication;
@@ -55,6 +71,8 @@ public class RegisterGarage extends Activity implements OnMapReadyCallback {
     private GoogleMap mGoogleMap;
     private FusedLocationProviderClient mFusedLocationClient;
 
+    //
+    HorarioGarage horarioGarage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +89,10 @@ public class RegisterGarage extends Activity implements OnMapReadyCallback {
         etWidth = findViewById(R.id.etWidthRegisterGarage);
         etHeight = findViewById(R.id.etHeightRegisterGarage);
         btnregister = findViewById(R.id.btnRegistrarGarage);
-
+        btnpickDate = findViewById(R.id.btnPickDate);
+        lvFechas = findViewById(R.id.lvFechas);
+        listFechas = new ArrayList<>();
+        horarioGarage = new HorarioGarage();
         //Mapa
         mMapView = findViewById(R.id.mpDireccion);
         mMapView.onCreate(savedInstanceState);
@@ -85,6 +106,14 @@ public class RegisterGarage extends Activity implements OnMapReadyCallback {
         }
         getLastKnownLocation();
 
+        // Fecha y hora
+        btnpickDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog();
+            }
+        });
+
         btnregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +121,7 @@ public class RegisterGarage extends Activity implements OnMapReadyCallback {
                 Integer width = Integer.parseInt(etWidth.getText().toString());
                 Integer height = Integer.parseInt(etHeight.getText().toString());
 
-                Garage garage = new Garage(email,tvAddress.getText().toString(),ubication.latitude, ubication.longitude,height,width,length,"libre");
+                Garage garage = new Garage(email,tvAddress.getText().toString(),ubication.latitude, ubication.longitude,height,width,length,"libre",horarioGarage,Double.valueOf(20.5));
                 String garageId = garagesRef.push().getKey();
                 garagesRef.child(garageId).setValue(garage);
                 EspacioGarage espacioGarage = new EspacioGarage(garageId,length,width);
@@ -101,6 +130,75 @@ public class RegisterGarage extends Activity implements OnMapReadyCallback {
                 startActivity(intent);
             }
         });
+    }
+
+    //Fecha y hora
+    public void showDatePickerDialog() {
+        // Obtener la fecha y hora actuales
+        Calendar calendar = Calendar.getInstance();
+
+        // Crear un diálogo de selección de fecha
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, year, month, dayOfMonth) -> {
+                    // Cuando se selecciona una fecha, crear un diálogo de selección de hora para la hora inicial
+                    TimePickerDialog startTimePickerDialog = new TimePickerDialog(
+                            this,
+                            (view1, hourOfDay, minute) -> {
+                                // Cuando se selecciona una hora inicial, mostrar un diálogo de selección de hora para la hora final
+                                TimePickerDialog endTimePickerDialog = new TimePickerDialog(
+                                        this,
+                                        (view2, endHourOfDay, endMinute) -> {
+                                            // Crear un objeto Calendar para la fecha seleccionada
+                                            Calendar selectedCalendar = Calendar.getInstance();
+                                            selectedCalendar.set(year, month, dayOfMonth);
+
+                                            // Crear un objeto Calendar para la hora de inicio seleccionada
+                                            Calendar startTimeCalendar = Calendar.getInstance();
+                                            startTimeCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                            startTimeCalendar.set(Calendar.MINUTE, minute);
+
+                                            // Crear un objeto Calendar para la hora de fin seleccionada
+                                            Calendar endTimeCalendar = Calendar.getInstance();
+                                            endTimeCalendar.set(Calendar.HOUR_OF_DAY, endHourOfDay);
+                                            endTimeCalendar.set(Calendar.MINUTE, endMinute);
+
+                                            // Agregar el horario al HorarioGarage
+                                            horarioGarage.agregarHorario(dayOfMonth, (month + 1), year, startTimeCalendar, endTimeCalendar);
+
+                                            // Mostrar las horas de inicio y fin en el TextView
+                                            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                                            String startTime = sdf.format(startTimeCalendar.getTime());
+                                            String endTime = sdf.format(endTimeCalendar.getTime());
+                                            String dateTimeRange = dayOfMonth + "/" + (month + 1) + "/" + year + "    Hora inicio: " + startTime + "\nHora fin: " + endTime;
+
+                                            // Antes de llamar a notifyDataSetChanged()
+                                            listFechas.add(dateTimeRange);
+                                            adaptador = new ArrayAdapter<>(getApplicationContext(), R.layout.item_layout, listFechas);
+                                            lvFechas.setAdapter(adaptador);
+                                            adaptador.notifyDataSetChanged();
+
+                                        },
+                                        calendar.get(Calendar.HOUR_OF_DAY), // Hora actual
+                                        calendar.get(Calendar.MINUTE), // Minuto actual
+                                        false // Formato de hora de 24 horas
+                                );
+                                // Mostrar el diálogo de selección de hora final
+                                endTimePickerDialog.show();
+                            },
+                            calendar.get(Calendar.HOUR_OF_DAY), // Hora actual
+                            calendar.get(Calendar.MINUTE), // Minuto actual
+                            false // Formato de hora de 24 horas
+                    );
+                    // Mostrar el diálogo de selección de hora inicial
+                    startTimePickerDialog.show();
+                },
+                calendar.get(Calendar.YEAR), // Año actual
+                calendar.get(Calendar.MONTH), // Mes actual
+                calendar.get(Calendar.DAY_OF_MONTH) // Día actual
+        );
+        // Mostrar el diálogo de selección de fecha
+        datePickerDialog.show();
     }
 
     @Override

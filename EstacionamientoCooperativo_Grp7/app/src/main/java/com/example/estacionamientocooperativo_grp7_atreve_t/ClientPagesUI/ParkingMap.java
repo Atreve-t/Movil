@@ -28,6 +28,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,6 +48,7 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference offerRef, garagesRef;
     LatLng ubication;
+    List<Marker> markerList = new ArrayList<>();
     //Mapa
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private MapView mMapView;
@@ -91,23 +94,23 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mGoogleMap = googleMap;
 
-        /*/ Recuperar los garages de la base de datos y agregar los marcadores rojos
+        // Recuperar los garages de la base de datos y agregar los marcadores rojos
         garagesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Verificar si el valor no es nulo
-                    if (snapshot.child("latitude").getValue() != null && snapshot.child("longitude").getValue() != null) {
+                    if (snapshot.child("latitud").getValue() != null && snapshot.child("longitud").getValue() != null) {
                         // Obtener la información del garage
-                        Double latitude = snapshot.child("latitude").getValue(Double.class);
-                        Double longitude = snapshot.child("longitude").getValue(Double.class);
+                        Double latitude = snapshot.child("latitud").getValue(Double.class);
+                        Double longitude = snapshot.child("longitud").getValue(Double.class);
 
                         // Crear el marcador rojo
                         LatLng garageLocation = new LatLng(latitude, longitude);
                         MarkerOptions markerOptions = new MarkerOptions()
                                 .position(garageLocation)
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                        mGoogleMap.addMarker(markerOptions);
+                        Marker marker = mGoogleMap.addMarker(markerOptions);
                     } else {
                         // Manejar el caso en el que el valor sea nulo
                         Toast.makeText(ParkingMap.this, "Valor nulo encontrado", Toast.LENGTH_SHORT).show();
@@ -115,23 +118,24 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
                 }
             }
 
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Manejar cualquier error de la base de datos
                 Toast.makeText(ParkingMap.this, "Error al recuperar los datos de la base de datos", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
 
-        // Configurar el listener para detectar clics en el mapa
-        mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        // Configurar el listener para detectar clics en los marcadores
+        mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onMapClick(LatLng latLng) {
-                //addRedMarker(latLng);
-                //getAddressFromLocation(latLng);
+            public boolean onMarkerClick(Marker marker) {
+                // Llamar al método getAddressFromLocation() con la posición del marcador
+                getAddressFromLocation(marker.getPosition());
+                return true; // Indica que el evento ha sido manejado
             }
         });
     }
+
 
 
     private void getLastKnownLocation() {
@@ -171,18 +175,6 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
             getAddressFromLocation(currentLatLng);
         }
-    }
-
-    private void addRedMarker(LatLng latLng) {
-        // Crear un marcador en la ubicación donde se hizo clic
-        MarkerOptions markerOptions = new MarkerOptions()
-                .position(latLng)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-
-        mGoogleMap.addMarker(markerOptions);
-
-        // Obtener la latitud y longitud de donde se hizo clic
-        getAddressFromLocation(latLng);
     }
 
     private void getAddressFromLocation(LatLng latLng) {
