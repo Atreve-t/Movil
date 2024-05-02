@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try{
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firbaseAuth(account.getIdToken());
+                firebaseAuth(account.getIdToken());
 
             }
             catch (Exception e){
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void firbaseAuth(String idToken) {
+    private void firebaseAuth(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null  );
 
         auth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
                     HashMap<String,Object> map = new HashMap<>();
                     map.put("id",user.getUid());
+                    map.put("email", user.getEmail());
                     map.put("name" , user.getDisplayName());
                     map.put("profile", user.getPhotoUrl().toString());
 
