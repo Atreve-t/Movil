@@ -1,6 +1,5 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.OfferPagesUI;
 
-import com.example.estacionamientocooperativo_grp7_atreve_t.ClientPagesUI.MyCarsPage;
 import com.example.estacionamientocooperativo_grp7_atreve_t.Modelos.*;
 import android.app.Activity;
 import android.content.Context;
@@ -32,7 +31,7 @@ public class MyListGaragesPage extends Activity {
         tvListGarages = findViewById(R.id.tvListGarages);
         firebaseDatabase = FirebaseDatabase.getInstance("https://atreve-t-isi-default-rtdb.firebaseio.com/");
         // Obtener referencia a la colección "automoviles"
-        garagesRef = firebaseDatabase.getReference().child("automoviles");
+        garagesRef = firebaseDatabase.getReference().child("garages");
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "");
@@ -42,20 +41,22 @@ public class MyListGaragesPage extends Activity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 StringBuilder garagesText = new StringBuilder();
+                if (!dataSnapshot.exists()) {
+                    garagesText.append("Aún no tiene garages registrados");
+                } else {
+                    // Iterar sobre los garages encontrados
+                    for (DataSnapshot autoSnapshot : dataSnapshot.getChildren()) {
+                        Garage garage = autoSnapshot.getValue(Garage.class);
 
-                // Iterar sobre los garages encontrados
-                for (DataSnapshot autoSnapshot : dataSnapshot.getChildren()) {
-                    // Obtener el auto actual
-                    Garaje garage = autoSnapshot.getValue(Garaje.class);
+                        // Construir una cadena con la información del auto
+                        String garageInfo = "Direccion: " + garage.getDireccion() + "\n";
+                        garageInfo += "Dimensiones: " + garage.getLargo() + " x " + garage.getAncho() + " x " + garage.getAlto() + "\n";
+                        garageInfo += "Estado: " + garage.getEstado() + "\n\n";
 
-                    // Construir una cadena con la información del auto
-                    String garageInfo = "Direccion: " + garage.getDireccion() + "\n";
-                    garageInfo += "Dimensiones: " + garage.getLargo() + " x " + garage.getAncho() + " x " + garage.getAlto() + "\n\n";
-
-                    // Agregar la información del auto al StringBuilder
-                    garagesText.append(garageInfo);
+                        // Agregar la información del auto al StringBuilder
+                        garagesText.append(garageInfo);
+                    }
                 }
-
                 // Establecer la cadena de información de los autos en el TextView
                 tvListGarages.setText(garagesText.toString());
             }

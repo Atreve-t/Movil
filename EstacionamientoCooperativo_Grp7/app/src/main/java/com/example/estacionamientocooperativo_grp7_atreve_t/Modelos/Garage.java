@@ -1,6 +1,6 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
 
-public class Garaje {
+public class Garage {
     private String propietarioId;
     private String direccion;
     private double latitud;
@@ -14,7 +14,7 @@ public class Garaje {
     private String fin;
 
 
-    public Garaje(){}
+    public Garage(){}
 
     public String getPropietarioId() {
         return propietarioId;
@@ -105,7 +105,7 @@ public class Garaje {
     }
 
     // Otros campos según sea necesario
-    public Garaje(String propietarioId, String direccion, double latitud, double longitud, Integer alto, Integer ancho, Integer largo, String estado) {
+    public Garage(String propietarioId, String direccion, double latitud, double longitud, Integer alto, Integer ancho, Integer largo, String estado) {
         this.propietarioId = propietarioId;
         this.direccion = direccion;
         this.latitud = latitud;
