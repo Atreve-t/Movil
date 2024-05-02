@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         googleAuth = findViewById(R.id.btnGoogle);
         auth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.client_id))
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail().build();
         googleSignInClient = GoogleSignIn.getClient(this,gso);
         googleAuth.setOnClickListener(new View.OnClickListener() {
