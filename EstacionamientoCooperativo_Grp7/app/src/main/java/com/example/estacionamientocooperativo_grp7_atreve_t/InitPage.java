@@ -37,8 +37,45 @@ public class InitPage extends AppCompatActivity {
         btnClientJ= findViewById(R.id.btnClient);
         btnBidderJ = findViewById(R.id.btnBidder);
 
+
+        // Ocultar botón btnClient si el tipo de usuario es ofertante
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "");
+
+        // Verificar y mostrar solo el botón correspondiente al tipo de usuario definido
+        usuariosRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    Usuario user = userSnapshot.getValue(Usuario.class);
+                    if (user != null) {
+                        // Verificar si el tipo de usuario ya está definido
+                        if ("ofertante".equals(user.getTipo())) {
+                            btnClientJ.setVisibility(View.GONE);
+                            btnBidderJ.setVisibility(View.VISIBLE); // Mostrar botón de ofertante
+                        } else if ("cliente".equals(user.getTipo())) {
+                            btnClientJ.setVisibility(View.VISIBLE); // Mostrar botón de cliente
+                            btnBidderJ.setVisibility(View.GONE);
+                        } else {
+                            // Si el tipo de usuario aún no está definido, mostrar ambos botones
+                            btnClientJ.setVisibility(View.VISIBLE);
+                            btnBidderJ.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Manejar cualquier error de base de datos
+                Log.e("Firebase", "Error al leer datos de Firebase: " + databaseError.getMessage(), databaseError.toException());
+                Toast.makeText(InitPage.this, "Error al leer datos de Firebase", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
 
         btnClientJ.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +87,13 @@ public class InitPage extends AppCompatActivity {
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                             Usuario user = userSnapshot.getValue(Usuario.class);
                             if (user != null) {
-                                user.setTipo("cliente");
-                                userSnapshot.getRef().setValue(user);
+                                if (user.getTipo() == null || user.getTipo().isEmpty()) {
+                                    // Si el tipo de usuario aún no está definido, establecerlo como "cliente"
+                                    user.setTipo("cliente");
+                                    userSnapshot.getRef().setValue(user);
+                                }
+                                Intent intent = new Intent(InitPage.this, ClientPage.class);
+                                startActivity(intent);
                             }
                         }
 
@@ -70,6 +112,8 @@ public class InitPage extends AppCompatActivity {
         });
 
 
+
+
         btnBidderJ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,8 +123,13 @@ public class InitPage extends AppCompatActivity {
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                             Usuario user = userSnapshot.getValue(Usuario.class);
                             if (user != null) {
-                                user.setTipo("ofertante");
-                                userSnapshot.getRef().setValue(user);
+                                if (user.getTipo() == null || user.getTipo().isEmpty()) {
+                                    // Si el tipo de usuario aún no está definido, establecerlo como "ofertante"
+                                    user.setTipo("ofertante");
+                                    userSnapshot.getRef().setValue(user);
+                                }
+                                Intent intent = new Intent(InitPage.this, BidderPage.class);
+                                startActivity(intent);
                             }
                         }
 
@@ -98,5 +147,7 @@ public class InitPage extends AppCompatActivity {
             }
         });
 
+
     }
+
 }

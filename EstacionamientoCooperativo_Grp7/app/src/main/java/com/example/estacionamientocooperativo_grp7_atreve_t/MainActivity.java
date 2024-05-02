@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Tu lógica para iniciar sesión
                 try {
                     email = findViewById(R.id.etUsername);
                     pass = findViewById(R.id.etPass);
@@ -115,7 +116,21 @@ public class MainActivity extends AppCompatActivity {
                                 if (user != null && user.getPassword().equals(pass.getText().toString())) {
                                     // El usuario existe y la contraseña es correcta
                                     userFound = true;
-                                    SignIn();
+                                    // Verificar si el usuario tiene un tipo definido
+                                    if (!user.getTipo().isEmpty()) {
+                                        // Redirigir a la página correspondiente al tipo de usuario
+                                        if ("ofertante".equals(user.getTipo())) {
+                                            startActivity(new Intent(MainActivity.this, BidderPage.class));
+                                            finish(); // Terminar la actividad actual para evitar que el usuario regrese aquí
+                                        } else if ("cliente".equals(user.getTipo())) {
+                                            startActivity(new Intent(MainActivity.this, ClientPage.class));
+                                            finish(); // Terminar la actividad actual para evitar que el usuario regrese aquí
+                                        }
+                                    } else {
+                                        // El usuario no tiene un tipo definido, redirigir a la página para definirlo
+                                        startActivity(new Intent(MainActivity.this, InitPage.class));
+                                        finish(); // Terminar la actividad actual para evitar que el usuario regrese aquí
+                                    }
                                     break;
                                 }
                             }
