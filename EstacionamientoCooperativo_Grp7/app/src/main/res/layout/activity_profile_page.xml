@@ -7,12 +7,11 @@
     tools:context=".ClientPagesUI.ProfilePage">
 
 
-
     <Button
         android:id="@+id/btnEditProfile"
         android:layout_width="174dp"
         android:layout_height="70dp"
-        android:text="Editar"
+        android:text="CALIFICAR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -51,9 +50,9 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="187dp"
-        android:layout_height="220dp"
-        android:text="Nombre: John Doe\nEdad: 30 años\nPaís: Estados Unidos\nProfesión: Desarrollador de Software"
+        android:layout_width="249dp"
+        android:layout_height="226dp"
+        android:text="Nombre:\n John Doe\nEmail: \n jhon@gmail.com"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -62,6 +61,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.702" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

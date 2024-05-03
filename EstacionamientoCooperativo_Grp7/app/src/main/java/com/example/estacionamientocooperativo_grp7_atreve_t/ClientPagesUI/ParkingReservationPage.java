@@ -176,9 +176,12 @@ public class ParkingReservationPage extends AppCompatActivity {
                                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
                                 String selectedDateTime = sdf.format(selectedCalendar.getTime());
 
-                                tvFechasSleccionadas.setText("Fecha y hora Inicio: " + selectedDateTime + "\n");
+
                                 if (!isInicio){
                                     tvFechasSleccionadas.append("Fecha y hora Fin: " + selectedDateTime);
+                                }
+                                else{
+                                    tvFechasSleccionadas.append("Fecha y hora Inicio: " + selectedDateTime + "\n");
                                 }
                             },
                             calendar.get(Calendar.HOUR_OF_DAY), // Hora actual
