@@ -110,4 +110,11 @@ public class Garage {
         this.precio = precio;
     }
 
+    public Garage(double latitud, double longitud) {
+
+        this.latitud = latitud;
+        this.longitud = longitud;
+
+    }
+
 }
