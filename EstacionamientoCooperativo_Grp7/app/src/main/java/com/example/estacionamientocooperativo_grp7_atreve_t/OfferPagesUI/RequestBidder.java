@@ -24,6 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RequestBidder extends Activity {
     FirebaseDatabase firebaseDatabase;
@@ -69,9 +72,39 @@ public class RequestBidder extends Activity {
 
                                         // Construir una cadena con la información del auto
                                         String ofertaInfo = "Cliente: " + oferta.getClientId() + "\n";
-                                        ofertaInfo += "Fecha Inicio: " + "\n";
-                                        //ofertaInfo += "Fecha Fin: " + oferta.getFechaFin() + "\n";
-                                        ofertaInfo += "Oferta Actual: " + oferta.getOfertaActual() + "\n\n";
+                                        ofertaInfo += "Oferta Actual: " + oferta.getOfertaActual() + "\n";
+
+
+                                        // Acceder al objeto Periodo dentro de la Oferta
+                                        HorarioGarage periodo = oferta.getPeriodo();
+                                        if (periodo != null && !periodo.getPeriodos().isEmpty()) {
+                                            // Suponiendo que solo estás interesado en el primer período
+                                            HorarioGarage.Periodo primerPeriodo = periodo.getPeriodos().get(0);
+
+                                            // Acceder a los atributos del primer período
+                                            int dia = primerPeriodo.getDia();
+                                            int mes = primerPeriodo.getMes();
+                                            int año = primerPeriodo.getAño();
+
+                                            // Acceder al primer horario dentro del primer período
+                                            HorarioGarage.Hora primerHorario = primerPeriodo.getHorarios().get(0);
+                                            int horaInicio = primerHorario.getHoraInicio();
+                                            int minutoInicio = primerHorario.getMinutoInicio();
+                                            int horaFin = primerHorario.getHoraFin();
+                                            int minutoFin = primerHorario.getMinutoFin();
+
+                                            // Aquí puedes formatear la fecha y hora de inicio y fin según tus necesidades
+                                            // Por ejemplo:
+                                            String fechaHoraInicio = String.format(Locale.getDefault(), "%02d/%02d/%d %02d:%02d", dia, mes, año, horaInicio, minutoInicio);
+                                            String fechaHoraFin = String.format(Locale.getDefault(), "%02d/%02d/%d %02d:%02d", dia, mes, año, horaFin, minutoFin);
+
+                                            // Ahora puedes agregar estas cadenas a tu información de ofertaInfo
+                                            ofertaInfo += "Fecha y hora Inicio: " + fechaHoraInicio + "\n";
+                                            ofertaInfo += "Fecha y hora Fin: " + fechaHoraFin + "\n";
+                                        } else {
+                                            // Manejar el caso donde no hay periodos o no hay horarios dentro de los periodos
+                                        }
+
 
                                         // Agregar la información del auto al StringBuilder
                                         listrequest.add(ofertaInfo);

@@ -1,5 +1,4 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
-import java.util.Calendar;
 
 public class Oferta {
     private String garajeId;
@@ -8,10 +7,9 @@ public class Oferta {
     private double ofertaActual;
     private double ofertaAnterior;
     private String estado;
-    private Calendar fechaInicio;
-    private Calendar fechaFin;
+    private HorarioGarage periodo;
 
-    public Oferta(){}
+    public Oferta() {}
 
     public String getGarajeId() {
         return garajeId;
@@ -61,30 +59,21 @@ public class Oferta {
         this.estado = estado;
     }
 
-    public Calendar getFechaInicio() {
-        return fechaInicio;
+    public HorarioGarage getPeriodo() {
+        return periodo;
     }
 
-    public void setFechaInicio(Calendar fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setPeriodo(HorarioGarage periodo) {
+        this.periodo = periodo;
     }
 
-    public Calendar getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(Calendar fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    public Oferta(String garajeId, String usuarioId, String automovilId, double montoActual, double montoAnterior, String estado, Calendar fechaInicio, Calendar fechaFin) {
+    public Oferta(String garajeId, String clientId, String automovilId, double ofertaActual, double ofertaAnterior, String estado, HorarioGarage periodo) {
         this.garajeId = garajeId;
-        this.clientId = usuarioId;
+        this.clientId = clientId;
         this.automovilId = automovilId;
-        this.ofertaActual = montoActual;
-        this.ofertaAnterior = montoAnterior;
+        this.ofertaActual = ofertaActual;
+        this.ofertaAnterior = ofertaAnterior;
         this.estado = estado;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+        this.periodo = periodo;
     }
 }

@@ -35,9 +35,11 @@ public class ParkingReservationPage extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference automovilesRef, ofertasRef, garagesRef;
     String UidcarToPark = "", garageIdParking = "";
-    private Calendar calendarInicio;
-    private Calendar calendarFin;
 
+    // Crear objetos Hora para la hora de inicio y fin
+    Calendar inicio,fin;
+    HorarioGarage.Periodo fechaInicio = new HorarioGarage.Periodo();
+    HorarioGarage.Periodo fechaFin = new HorarioGarage.Periodo();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +52,6 @@ public class ParkingReservationPage extends AppCompatActivity {
         etmonto = findViewById(R.id.etOffer);
         btnFechaInicio = findViewById(R.id.btnFechaInicio);
         btnFechaFin = findViewById(R.id.btnFechaFin);
-        calendarInicio = Calendar.getInstance();
-        calendarFin = Calendar.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance("https://atreve-t-isi-default-rtdb.firebaseio.com/");
         // Obtener referencia a la colección "ofertas"
         automovilesRef = firebaseDatabase.getReference().child("automoviles");
@@ -136,13 +136,25 @@ public class ParkingReservationPage extends AppCompatActivity {
             public void onClick(View view) {
                 Double monto = Double.valueOf(etmonto.getText().toString());
 
-                Oferta oferta = new Oferta(garageIdParking, email, UidcarToPark, monto, monto, "", calendarInicio, calendarFin);
+                // Crear un objeto HorarioGarage
+                HorarioGarage horarioGarage = new HorarioGarage();
+
+                // Agregar las fechas de inicio y fin seleccionadas al objeto HorarioGarage
+                horarioGarage.agregarHorario(fechaInicio.getDia(), fechaInicio.getMes(), fechaInicio.getAño(), inicio, fin);
+
+                // Crear la instancia de Oferta con los parámetros actualizados
+                Oferta oferta = new Oferta(garageIdParking, email, UidcarToPark, monto, monto, "", horarioGarage);
+
+                // Guardar la oferta en la base de datos
                 ofertasRef.child(ofertasRef.push().getKey()).setValue(oferta);
 
                 //Intent intent = new Intent(ParkingReservationPage.this, MisReservas.class);
                 //startActivity(intent);
             }
         });
+
+
+
     }
 
     public void showDatePickerDialog(final boolean isInicio) {
@@ -157,18 +169,24 @@ public class ParkingReservationPage extends AppCompatActivity {
                     Calendar selectedCalendar = Calendar.getInstance();
                     selectedCalendar.set(year, month, dayOfMonth);
 
-                    // Guardar el calendario seleccionado en la variable correspondiente
+                    // Almacenar las fechas seleccionadas en las variables correspondientes
                     if (isInicio) {
-                        calendarInicio = selectedCalendar;
+                        fechaInicio.setDia(dayOfMonth);
+                        fechaInicio.setMes(month);
+                        fechaInicio.setAño(year);
+                        inicio = selectedCalendar;
                     } else {
-                        calendarFin = selectedCalendar;
+                        fechaFin.setDia(dayOfMonth);
+                        fechaFin.setMes(month);
+                        fechaFin.setAño(year);
+                        fin = selectedCalendar;
                     }
 
                     // Crear un diálogo de selección de hora
                     TimePickerDialog timePickerDialog = new TimePickerDialog(
                             this,
                             (view1, hourOfDay, minute) -> {
-                                // Cuando se selecciona una hora, actualizar el calendario seleccionado con la hora seleccionada
+                                // Cuando se selecciona una hora, actualizar el timestamp con la hora seleccionada
                                 selectedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 selectedCalendar.set(Calendar.MINUTE, minute);
 
@@ -176,11 +194,9 @@ public class ParkingReservationPage extends AppCompatActivity {
                                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
                                 String selectedDateTime = sdf.format(selectedCalendar.getTime());
 
-
                                 if (!isInicio){
                                     tvFechasSleccionadas.append("Fecha y hora Fin: " + selectedDateTime);
-                                }
-                                else{
+                                } else {
                                     tvFechasSleccionadas.append("Fecha y hora Inicio: " + selectedDateTime + "\n");
                                 }
                             },
