@@ -38,11 +38,6 @@ public class ParkingReservationPage extends AppCompatActivity {
     private Calendar calendarInicio;
     private Calendar calendarFin;
 
-    DatabaseReference  garagesRef;
-    TextView InfoGaraje;
-    Button btnReservation;
-    TimePicker tiempoInicio;
-    TimePicker tiempoFin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
