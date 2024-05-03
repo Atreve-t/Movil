@@ -114,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
                             for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                                 Usuario user = userSnapshot.getValue(Usuario.class);
                                 if (user != null && user.getPassword().equals(pass.getText().toString())) {
+                                    // Guardar el correo electrónico en SharedPreferences
+                                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("email", email.getText().toString());
+                                    editor.apply();
                                     // El usuario existe y la contraseña es correcta
                                     userFound = true;
                                     // Verificar si el usuario tiene un tipo definido

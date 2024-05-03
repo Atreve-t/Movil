@@ -136,10 +136,10 @@ public class ParkingReservationPage extends AppCompatActivity {
             public void onClick(View view) {
                 Double monto = Double.valueOf(etmonto.getText().toString());
 
-                Oferta oferta = new Oferta(parking.getText().toString(), email, UidcarToPark, monto, monto, "", calendarInicio, calendarFin);
+                Oferta oferta = new Oferta(garageIdParking, email, UidcarToPark, monto, monto, "", calendarInicio, calendarFin);
                 ofertasRef.child(ofertasRef.push().getKey()).setValue(oferta);
 
-                //Intent intent = new Intent(ParkingReservationPage.this, OtraActividad.class);
+                //Intent intent = new Intent(ParkingReservationPage.this, MisReservas.class);
                 //startActivity(intent);
             }
         });

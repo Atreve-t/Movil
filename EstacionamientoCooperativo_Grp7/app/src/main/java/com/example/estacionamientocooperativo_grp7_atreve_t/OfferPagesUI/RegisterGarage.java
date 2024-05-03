@@ -81,6 +81,7 @@ public class RegisterGarage extends Activity implements OnMapReadyCallback {
         // Obtener referencia a la colección "garages"
         garagesRef = firebaseDatabase.getReference().child("garages");
         espacioGaragesRef = firebaseDatabase.getReference().child("espacioGarages");
+
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "");
 
@@ -124,6 +125,7 @@ public class RegisterGarage extends Activity implements OnMapReadyCallback {
                 Integer height = Integer.parseInt(etHeight.getText().toString());
                 Double price = Double.valueOf(etPrice.getText().toString());
                 Garage garage = new Garage(email,tvAddress.getText().toString(),ubication.latitude, ubication.longitude,height,width,length,"libre",horarioGarage,price,Double.valueOf(5.0),etInfoAdicional.getText().toString());
+                Toast.makeText(RegisterGarage.this, email, Toast.LENGTH_SHORT).show();
                 String garageId = garagesRef.push().getKey();
                 garagesRef.child(garageId).setValue(garage);
                 EspacioGarage espacioGarage = new EspacioGarage(garageId,length,width);

@@ -45,8 +45,8 @@ public class MyListGaragesPage extends Activity {
                     garagesText.append("Aún no tiene garages registrados");
                 } else {
                     // Iterar sobre los garages encontrados
-                    for (DataSnapshot autoSnapshot : dataSnapshot.getChildren()) {
-                        Garage garage = autoSnapshot.getValue(Garage.class);
+                    for (DataSnapshot garageSnapshot : dataSnapshot.getChildren()) {
+                        Garage garage = garageSnapshot.getValue(Garage.class);
 
                         // Construir una cadena con la información del auto
                         String garageInfo = "Direccion: " + garage.getDireccion() + "\n";
