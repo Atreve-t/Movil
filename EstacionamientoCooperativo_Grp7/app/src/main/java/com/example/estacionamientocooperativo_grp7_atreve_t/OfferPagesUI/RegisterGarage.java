@@ -45,7 +45,7 @@ import java.util.Locale;
 import java.util.List;
 
 import android.app.DatePickerDialog;
-import android.widget.DatePicker;
+
 import java.util.Calendar;
 
 import android.app.TimePickerDialog;
@@ -54,7 +54,7 @@ import android.widget.ArrayAdapter;
 
 public class RegisterGarage extends Activity implements OnMapReadyCallback {
     TextView tvAddress;
-    EditText etLength, etWidth, etHeight;
+    EditText etLength, etWidth, etHeight, etPrice, etInfoAdicional;
     Button btnregister, btnpickDate;
 
     //ListView
@@ -88,6 +88,8 @@ public class RegisterGarage extends Activity implements OnMapReadyCallback {
         etLength = findViewById(R.id.etLengthRegisterGarage);
         etWidth = findViewById(R.id.etWidthRegisterGarage);
         etHeight = findViewById(R.id.etHeightRegisterGarage);
+        etPrice = findViewById(R.id.etPrice);
+        etInfoAdicional = findViewById(R.id.etAditionalInfoRegisterGarage);
         btnregister = findViewById(R.id.btnRegistrarGarage);
         btnpickDate = findViewById(R.id.btnPickDate);
         lvFechas = findViewById(R.id.lvFechas);
@@ -120,8 +122,8 @@ public class RegisterGarage extends Activity implements OnMapReadyCallback {
                 Integer length = Integer.parseInt(etLength.getText().toString());
                 Integer width = Integer.parseInt(etWidth.getText().toString());
                 Integer height = Integer.parseInt(etHeight.getText().toString());
-
-                Garage garage = new Garage(email,tvAddress.getText().toString(),ubication.latitude, ubication.longitude,height,width,length,"libre",horarioGarage,Double.valueOf(20.5));
+                Double price = Double.valueOf(etPrice.getText().toString());
+                Garage garage = new Garage(email,tvAddress.getText().toString(),ubication.latitude, ubication.longitude,height,width,length,"libre",horarioGarage,price,Double.valueOf(5.0),etInfoAdicional.getText().toString());
                 String garageId = garagesRef.push().getKey();
                 garagesRef.child(garageId).setValue(garage);
                 EspacioGarage espacioGarage = new EspacioGarage(garageId,length,width);

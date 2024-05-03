@@ -1,13 +1,15 @@
 package com.example.estacionamientocooperativo_grp7_atreve_t.Modelos;
+import java.util.Calendar;
 
 public class Oferta {
     private String garajeId;
-    private String usuarioId;
+    private String clientId;
     private String automovilId;
-    private double monto;
+    private double ofertaActual;
+    private double ofertaAnterior;
     private String estado;
-    private String fechaInicio;
-    private String fechaFin;
+    private Calendar fechaInicio;
+    private Calendar fechaFin;
 
     public Oferta(){}
 
@@ -19,12 +21,12 @@ public class Oferta {
         this.garajeId = garajeId;
     }
 
-    public String getUsuarioId() {
-        return usuarioId;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setUsuarioId(String usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public String getAutomovilId() {
@@ -35,12 +37,20 @@ public class Oferta {
         this.automovilId = automovilId;
     }
 
-    public double getMonto() {
-        return monto;
+    public double getOfertaActual() {
+        return ofertaActual;
     }
 
-    public void setMonto(double monto) {
-        this.monto = monto;
+    public void setOfertaActual(double ofertaActual) {
+        this.ofertaActual = ofertaActual;
+    }
+
+    public double getOfertaAnterior() {
+        return ofertaAnterior;
+    }
+
+    public void setOfertaAnterior(double ofertaAnterior) {
+        this.ofertaAnterior = ofertaAnterior;
     }
 
     public String getEstado() {
@@ -51,29 +61,28 @@ public class Oferta {
         this.estado = estado;
     }
 
-    public String getFechaInicio() {
+    public Calendar getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
+    public void setFechaInicio(Calendar fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public String getFechaFin() {
+    public Calendar getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(String fechaFin) {
+    public void setFechaFin(Calendar fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    // Otros campos según sea necesario
-
-    public Oferta(String garajeId, String usuarioId, String automovilId, double monto, String estado, String fechaInicio, String fechaFin) {
+    public Oferta(String garajeId, String usuarioId, String automovilId, double montoActual, double montoAnterior, String estado, Calendar fechaInicio, Calendar fechaFin) {
         this.garajeId = garajeId;
-        this.usuarioId = usuarioId;
+        this.clientId = usuarioId;
         this.automovilId = automovilId;
-        this.monto = monto;
+        this.ofertaActual = montoActual;
+        this.ofertaAnterior = montoAnterior;
         this.estado = estado;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;

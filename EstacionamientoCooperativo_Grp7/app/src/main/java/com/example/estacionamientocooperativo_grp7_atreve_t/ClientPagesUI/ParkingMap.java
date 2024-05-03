@@ -19,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.estacionamientocooperativo_grp7_atreve_t.InitPage;
+import com.example.estacionamientocooperativo_grp7_atreve_t.MainActivity;
+import com.example.estacionamientocooperativo_grp7_atreve_t.Modelos.Garage;
 import com.example.estacionamientocooperativo_grp7_atreve_t.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -49,6 +52,7 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
     DatabaseReference offerRef, garagesRef;
     LatLng ubication;
     List<Marker> markerList = new ArrayList<>();
+    String garageId;
     //Mapa
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private MapView mMapView;
@@ -85,7 +89,10 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
         btnOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(ParkingMap.this, MyCarsPage.class);
+                //intent.putExtra("ParkingAddress", tvAddressParking.getText().toString());
+                intent.putExtra("GarageId", garageId);
+                startActivity(intent);
             }
         });
     }
@@ -93,7 +100,6 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mGoogleMap = googleMap;
-
         // Recuperar los garages de la base de datos y agregar los marcadores rojos
         garagesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -101,6 +107,7 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Verificar si el valor no es nulo
                     if (snapshot.child("latitud").getValue() != null && snapshot.child("longitud").getValue() != null) {
+                        garageId = snapshot.getKey(); // Obtener el ID del garaje
                         // Obtener la información del garage
                         Double latitude = snapshot.child("latitud").getValue(Double.class);
                         Double longitude = snapshot.child("longitud").getValue(Double.class);
@@ -135,7 +142,6 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
             }
         });
     }
-
 
 
     private void getLastKnownLocation() {

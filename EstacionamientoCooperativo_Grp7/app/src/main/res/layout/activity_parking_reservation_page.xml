@@ -19,73 +19,147 @@
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069" />
-
-    <EditText
-        android:id="@+id/btnEnProceso5"
-        android:layout_width="229dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Dato"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.378" />
-
-    <EditText
-        android:id="@+id/btnEnProceso6"
-        android:layout_width="229dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Dato"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.531" />
-
-    <EditText
-        android:id="@+id/btnEnProceso7"
-        android:layout_width="229dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Dato"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685" />
-
-    <EditText
-        android:id="@+id/btnEnProceso8"
-        android:layout_width="229dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Dato"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.806" />
+        app:layout_constraintVertical_bias="0.052" />
 
     <Button
-        android:id="@+id/btnEngg"
+        android:id="@+id/btnSendOffer"
         android:layout_width="174dp"
-        android:layout_height="70dp"
-        android:text="Registrar"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="65dp"
+        android:layout_marginTop="24dp"
+        android:text="ENVIAR OFERTA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.921" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFechasSeleccionadas" />
+
+    <TextView
+        android:id="@+id/tvParkingOffer"
+        android:layout_width="273dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="159dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:text="PARQUEO"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="159dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:text="AUTO"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvParkingOffer" />
+
+    <TextView
+        android:id="@+id/tvCarToParkOffer"
+        android:layout_width="273dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="159dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:text="OFERTA"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecioGarage" />
+
+    <EditText
+        android:id="@+id/etOffer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Monto Bs."
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <Button
+        android:id="@+id/btnFechaInicio"
+        android:layout_width="174dp"
+        android:layout_height="65dp"
+        android:text="FECHA INICIO"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnFechaFin"
+        app:layout_constraintEnd_toStartOf="@+id/btnFechaFin"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnFechaFin"
+        android:layout_width="174dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="28dp"
+        android:text="FECHA FIN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etOffer" />
+
+    <TextView
+        android:id="@+id/tvFechasSeleccionadas"
+        android:layout_width="363dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFechaInicio" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="159dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:text="PRECIO"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCarToParkOffer" />
+
+    <TextView
+        android:id="@+id/tvPrecioGarage"
+        android:layout_width="273dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 </androidx.constraintlayout.widget.ConstraintLayout>
