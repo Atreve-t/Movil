@@ -99,7 +99,7 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mGoogleMap = googleMap;
         LatLng bolivia = new LatLng(-16.2902, -63.5887);
-        mGoogleMap.addMarker(new MarkerOptions().position(bolivia).title("Bolivia"));
+        //mGoogleMap.addMarker(new MarkerOptions().position(bolivia).title("Bolivia"));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bolivia,7));
 
 
