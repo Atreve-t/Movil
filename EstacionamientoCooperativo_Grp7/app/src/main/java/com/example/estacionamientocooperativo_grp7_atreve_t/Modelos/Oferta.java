@@ -87,4 +87,11 @@ public class Oferta {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
+
+    public Oferta(String garajeId, String estado, String fechaInicio, String fechaFin) {
+        this.garajeId = garajeId;
+        this.estado = estado;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
 }

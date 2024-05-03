@@ -119,4 +119,11 @@ public class Garage {
         this.infoAdicional = infoAdicional;
     }
 
+    public Garage(double latitud, double longitud) {
+
+        this.latitud = latitud;
+        this.longitud = longitud;
+
+    }
+
 }

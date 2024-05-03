@@ -49,7 +49,8 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
     TextView tvAddressParking;
     Button btnOffer;
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference offerRef, garagesRef;
+    DatabaseReference offerRef, garagesRef, garagesPrueba;
+    List<Garage> garageList = new ArrayList<>();
     LatLng ubication;
     List<Marker> markerList = new ArrayList<>();
     String garageId;
@@ -66,6 +67,8 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
         // Obtener referencia a la colección "offer"
         offerRef = firebaseDatabase.getReference().child("offer");
         garagesRef = firebaseDatabase.getReference().child("garages");
+        //{{{{
+        garagesPrueba = firebaseDatabase.getReference().child("garajePrueba");
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "");
@@ -84,7 +87,9 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
             return;
         }
-        getLastKnownLocation();
+
+        //Desactivado localizacionactual
+        //getLastKnownLocation();
 
         btnOffer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,25 +107,92 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
         mGoogleMap = googleMap;
         // Recuperar los garages de la base de datos y agregar los marcadores rojos
         garagesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
+            @Overridew
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Verificar si el valor no es nulo
                     if (snapshot.child("latitud").getValue() != null && snapshot.child("longitud").getValue() != null) {
                         garageId = snapshot.getKey(); // Obtener el ID del garaje
                         // Obtener la información del garage
-                        Double latitude = snapshot.child("latitud").getValue(Double.class);
-                        Double longitude = snapshot.child("longitud").getValue(Double.class);
+                        Double latitude = snapshot.child("latitude").getValue(Double.class);
+                        Double longitude = snapshot.child("longitude").getValue(Double.class);
 
                         // Crear el marcador rojo
                         LatLng garageLocation = new LatLng(latitude, longitude);
                         MarkerOptions markerOptions = new MarkerOptions()
                                 .position(garageLocation)
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                        Marker marker = mGoogleMap.addMarker(markerOptions);
+                        mGoogleMap.addMarker(markerOptions);
                     } else {
                         // Manejar el caso en el que el valor sea nulo
                         Toast.makeText(ParkingMap.this, "Valor nulo encontrado", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Manejar cualquier error de la base de datos
+                Toast.makeText(ParkingMap.this, "Error al recuperar los datos de la base de datos", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+
+
+        // Configurar el listener para detectar clics en el mapa
+        mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                //addRedMarker(latLng);
+                //getAddressFromLocation(latLng);
+            }
+        });
+        mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                // Aquí puedes obtener información sobre el marcador si es necesario
+                // Por ejemplo, puedes obtener la posición del marcador
+                LatLng markerPosition = marker.getPosition();
+                String markerTitle = marker.getTitle();
+
+                // Redirigir a MainActivity
+                Toast.makeText(ParkingMap.this, "info "+ markerTitle, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(ParkingMap.this, ParkingReservationPage.class);
+                intent.putExtra("markerTitle", markerTitle);
+                startActivity(intent);
+
+                // Devolver true para indicar que se ha manejado el clic en el marcador
+                // y que no se realizarán acciones adicionales (como abrir la información del marcador)
+                return true;
+            }
+        });
+        garagesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String idDocumento = snapshot.getKey();
+                    Double latitude = snapshot.child("latitud").getValue(Double.class);
+
+                    Double longitude = snapshot.child("longitud").getValue(Double.class);
+                    if (latitude != null && longitude != null) {
+                        // Crear un objeto Garage con la latitud y longitud obtenidas
+                        Garage garage = new Garage(latitude, longitude);
+                        // Agregar el garaje a la lista
+                        garageList.add(garage);
+                        // Crear el marcador rojo en el mapa
+                        LatLng garageLocation = new LatLng(latitude, longitude);
+                        MarkerOptions markerOptions = new MarkerOptions()
+                                .position(garageLocation)
+                                .title(idDocumento)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                        mGoogleMap.addMarker(markerOptions);
+
+
+                    } else {
+                        // Manejar el caso en el que no se encuentren latitud y longitud
+                        Toast.makeText(ParkingMap.this, "Latitud o longitud nula encontrada", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -129,16 +201,6 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Manejar cualquier error de la base de datos
                 Toast.makeText(ParkingMap.this, "Error al recuperar los datos de la base de datos", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Configurar el listener para detectar clics en los marcadores
-        mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                // Llamar al método getAddressFromLocation() con la posición del marcador
-                getAddressFromLocation(marker.getPosition());
-                return true; // Indica que el evento ha sido manejado
             }
         });
     }
@@ -181,6 +243,18 @@ public class ParkingMap extends AppCompatActivity implements OnMapReadyCallback 
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
             getAddressFromLocation(currentLatLng);
         }
+    }
+
+    private void addRedMarker(LatLng latLng) {
+        // Crear un marcador en la ubicación donde se hizo clic
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
+        mGoogleMap.addMarker(markerOptions);
+
+        // Obtener la latitud y longitud de donde se hizo clic
+        getAddressFromLocation(latLng);
     }
 
     private void getAddressFromLocation(LatLng latLng) {
