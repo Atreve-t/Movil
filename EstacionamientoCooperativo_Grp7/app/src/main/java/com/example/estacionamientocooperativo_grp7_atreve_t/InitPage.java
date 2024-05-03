@@ -73,10 +73,6 @@ public class InitPage extends AppCompatActivity {
             }
         });
 
-
-
-
-
         btnClientJ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,8 +106,6 @@ public class InitPage extends AppCompatActivity {
                 });
             }
         });
-
-
 
 
         btnBidderJ.setOnClickListener(new View.OnClickListener() {

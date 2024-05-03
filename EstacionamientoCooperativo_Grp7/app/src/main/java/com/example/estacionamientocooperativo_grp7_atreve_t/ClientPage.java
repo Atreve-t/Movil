@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.estacionamientocooperativo_grp7_atreve_t.ClientPagesUI.History;
 import com.example.estacionamientocooperativo_grp7_atreve_t.ClientPagesUI.MyCarsPage;
 import com.example.estacionamientocooperativo_grp7_atreve_t.ClientPagesUI.ParkingMap;
 import com.example.estacionamientocooperativo_grp7_atreve_t.ClientPagesUI.ProfilePage;
@@ -62,8 +63,8 @@ public class ClientPage extends AppCompatActivity {
         btnMyScheduleJ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Proximamente", Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(ClientPage.this, History.class);
+                startActivity(intent);
             }
         });
     }
